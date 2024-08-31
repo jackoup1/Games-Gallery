@@ -1,0 +1,53 @@
+﻿@model List<Game>
+
+@{
+    ViewData["Title"] = "Games";
+}
+
+<a class="btn btn-secondary btn-lg" asp-action="Create">
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add Game
+</a>
+
+@if (Model.Count == 0) {
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else {
+    <div class="mt-5">
+        <table class="table table-borderless">
+            <tbody>
+                @foreach (var game in Model) {
+                    <tr class="card border-success mb-3">
+                        <td>
+                            <div class="d-flex mb-0">
+                                <div class="pe-4">
+                                    <img src="@($"{FileSettings.ImagePath}{game.Cover}")" alt="@game.Name" style="max-width: 200px"  />
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h4>@game.Name</h4>
+                                    <h5>@game.Category.Name</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-end">
+                                <a class="btn btn-info rounder rounded-3 me-2" asp-action="Edit" asp-route-id="@game.Id">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <a  class="btn btn-danger rounded rounded-3 "
+                                    asp-action="Delete" 
+                                    asp-route-id ="@game.Id"
+                                    onclick="return confirm('Are you sure you want to delete this game?');">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
